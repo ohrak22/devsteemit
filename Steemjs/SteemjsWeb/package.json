@@ -1,0 +1,12 @@
+{
+  "name": "steemjs-web",
+  "version": "0.0.0",
+  "description": "SteemjsWeb",
+  "main": "server.js",
+  "author": {
+    "name": "ohrak"
+  },
+  "dependencies": {
+    "steem": "^0.7.1"
+  }
+}

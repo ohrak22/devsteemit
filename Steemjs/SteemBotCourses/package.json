@@ -1,0 +1,12 @@
+{
+  "name": "steem-bot-courses",
+  "version": "0.0.0",
+  "description": "SteemBotCourses",
+  "main": "app.js",
+  "author": {
+    "name": "ohrak"
+  },
+  "dependencies": {
+    "steem": "^0.7.1"
+  }
+}
