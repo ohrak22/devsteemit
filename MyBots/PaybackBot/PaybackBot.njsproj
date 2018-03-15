@@ -47,6 +47,9 @@
     <Compile Include="examples\NodeJSBasic.js">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="server.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Content Include="commentData.json" />
     <Content Include="config - ohrak22.json" />
     <Content Include="config.json" />
