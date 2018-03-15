@@ -57,18 +57,15 @@ function broadcastComment() {
             }
             else {
                 // comment에 성공하면 리스트에 저장한다. 나중에 보상에 성공하면 지워준다.
-                fs.readFile('./commentData.json', 'utf-8', function (error, data) {
-                    obj = JSON.parse(data);
-                    if (obj.permlinkList.indexOf(permlink) > -1) {
-                        obj.permlinkList.push(permlink);
-                    }
-                    obj.lastCommentTime = new Date().toISOString();
-                    obj.num++;
-                    fs.writeFile('./commentData.json', JSON.stringify(obj), function (err) {
-                        if (err)
-                            throw err;
-                        console.log('File write completed');
-                    });
+                if (obj.permlinkList.indexOf(permlink) > -1) {
+                    obj.permlinkList.push(permlink);
+                }
+                obj.lastCommentTime = new Date().toISOString();
+                obj.num++;
+                fs.writeFile('./commentData.json', JSON.stringify(obj), function (err) {
+                    if (err)
+                        throw err;
+                    console.log('File write completed');
                 });
             }
         }
