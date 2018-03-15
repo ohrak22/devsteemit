@@ -34,6 +34,7 @@ function update() {
 
     payout();
 }
+update();
 setInterval(update, 3 * 60 * 60 * 1000);
 
 function broadcastComment() {
