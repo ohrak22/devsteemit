@@ -28,7 +28,10 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="03.comment.js" />
+    <Compile Include="AutoReward.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CommentClass.js" />
     <Compile Include="app.js" />
     <Compile Include="examples\01.getAccounts.js" />
     <Compile Include="examples\02.vote.js" />
@@ -41,9 +44,12 @@
     <Compile Include="examples\09.follow.js" />
     <Compile Include="examples\10.streamOperations.js" />
     <Compile Include="examples\11.timers.js" />
+    <Compile Include="examples\NodeJSBasic.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Content Include="commentData.json" />
+    <Content Include="config - ohrak22.json" />
     <Content Include="config.json" />
-    <Content Include="examples\config.json" />
-    <Content Include="examples\result.txt" />
     <Content Include="package.json" />
     <Content Include="README.md" />
   </ItemGroup>
