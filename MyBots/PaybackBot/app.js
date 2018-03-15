@@ -1,8 +1,8 @@
 ﻿'use strict';
 var steem = require('steem')
 var fs = require('fs');
-var config = require('./config - ohrak22.json')
-var author = 'ohrak22';
+var config = require('./config.json')
+var author = 'paybackbot';
 var permlink = new Date().toISOString().replace(/[^a-zA-Z0-9]+/g, '').toLowerCase();
 
 console.log('Start');
