@@ -59,7 +59,7 @@ function broadcastComment() {
                     obj.permlinkList.push(permlink);
                 }
                 obj.lastCommentTime = new Date().toISOString();
-                obj.num++;
+                obj.postNumber++;
                 fs.writeFile('./commentData.json', JSON.stringify(obj), function (err) {
                     if (err)
                         throw err;
@@ -181,7 +181,7 @@ function payout() {
 
 function transfer(name, value, title) {
 
-    steem.broadcast.transfer(config.active, author, name, value + ' SBD', title + '보상', function (err, result) {
+    steem.broadcast.transfer(config.active, author, name, value + ' SBD', title + ' 보상', function (err, result) {
         console.log(err, result);
         if (err) {
 
