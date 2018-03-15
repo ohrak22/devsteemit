@@ -34,12 +34,12 @@ function update() {
 
     payout();
 }
-//update();
-//setInterval(update, 3 * 60 * 60 * 1000);
+update();
+setInterval(update, 3 * 60 * 60 * 1000);
 
-steem.api.getContent(author, '20180315t115740510z', function (err, result) {
-    console.log(err, result);
-});
+//steem.api.getContent(author, '20180315t115740510z', function (err, result) {
+//    console.log(err, result);
+//});
 
 function broadcastComment() {
     steem.broadcast.comment(
