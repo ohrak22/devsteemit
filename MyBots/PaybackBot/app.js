@@ -1,4 +1,4 @@
-'use strict';
+ï»¿'use strict';
 var steem = require('steem')
 var fs = require('fs');
 var config = require('./config.json')
@@ -44,8 +44,8 @@ function broadcastComment() {
         'kr', // Parent Permlink
         author, // Author
         permlink, // Permlink
-        'ÆäÀÌ¹é º¿ Å×½ºÆ® #1', // Title
-        '<html>\n<p>&nbsp;&nbsp;¼Ò°³</p>\n<p>&nbsp;\n<p>º¸ÆÃÀ» ÇÏ½Ã¸é ÆäÀÌ¾Æ¿ô ÈÄ ÀúÀÚº¸»óÀ¸·Î ¹ŞÀº ½ºÆÀ´Ş·¯¸¦ º¸ÆÃ ±â¿©µµ¿¡ µû¶ó Â÷µî ºĞ¹èÇÏ¿© º¸³»µå¸³´Ï´Ù. &nbsp;&nbsp;</p>\n<p>Å×½ºÆ® ±â°£ Áß¿¡´Â º¸»óÀÌ Á¤»óÀûÀ¸·Î Áö±ŞµÇÁö ¾ÊÀ» ¼ö ÀÖ½À´Ï´Ù. &nbsp;&nbsp;</p>\n<p>&nbsp;&nbsp;°³¹ß³»¿ª</p>\n<p>&nbsp;\n<p>1.ÀÚµ¿ Æ÷½ºÆÃ.&nbsp;&nbsp;</p>\n<p>&nbsp;\n<p>2.ÀÚµ¿ º¸»ó¹Ş±â.&nbsp;&nbsp;</p>\n<p>&nbsp;\n<p>3.ÀÚµ¿ º¸»ó¼Û±İ.&nbsp;&nbsp;</p>\n</html>', // Body
+        'í˜ì´ë°± ë´‡ í…ŒìŠ¤íŠ¸ #1', // Title
+        '<html>\n<p>&nbsp;&nbsp;ì†Œê°œ</p>\n<p>&nbsp;\n<p>ë³´íŒ…ì„ í•˜ì‹œë©´ í˜ì´ì•„ì›ƒ í›„ ì €ìë³´ìƒìœ¼ë¡œ ë°›ì€ ìŠ¤íŒ€ë‹¬ëŸ¬ë¥¼ ë³´íŒ… ê¸°ì—¬ë„ì— ë”°ë¼ ì°¨ë“± ë¶„ë°°í•˜ì—¬ ë³´ë‚´ë“œë¦½ë‹ˆë‹¤. &nbsp;&nbsp;</p>\n<p>í…ŒìŠ¤íŠ¸ ê¸°ê°„ ì¤‘ì—ëŠ” ë³´ìƒì´ ì •ìƒì ìœ¼ë¡œ ì§€ê¸‰ë˜ì§€ ì•Šì„ ìˆ˜ ìˆìŠµë‹ˆë‹¤. &nbsp;&nbsp;</p>\n<p>&nbsp;&nbsp;ê°œë°œë‚´ì—­</p>\n<p>&nbsp;\n<p>1.ìë™ í¬ìŠ¤íŒ….&nbsp;&nbsp;</p>\n<p>&nbsp;\n<p>2.ìë™ ë³´ìƒë°›ê¸°.&nbsp;&nbsp;</p>\n<p>&nbsp;\n<p>3.ìë™ ë³´ìƒì†¡ê¸ˆ.&nbsp;&nbsp;</p>\n</html>', // Body
         { tags: ['paybackbot'] }, // Json Metadata
         function (err, result) {
             console.log(err, result);
@@ -53,7 +53,7 @@ function broadcastComment() {
                 throw err;
             }
             else {
-                // comment¿¡ ¼º°øÇÏ¸é ¸®½ºÆ®¿¡ ÀúÀåÇÑ´Ù. ³ªÁß¿¡ º¸»ó¿¡ ¼º°øÇÏ¸é Áö¿öÁØ´Ù.
+                // commentì— ì„±ê³µí•˜ë©´ ë¦¬ìŠ¤íŠ¸ì— ì €ì¥í•œë‹¤. ë‚˜ì¤‘ì— ë³´ìƒì— ì„±ê³µí•˜ë©´ ì§€ì›Œì¤€ë‹¤.
                 fs.readFile('./commentData.json', 'utf-8', function (error, data) {
                     obj = JSON.parse(data);
                     if (obj.permlinkList.indexOf(permlink) > -1) {
@@ -117,19 +117,19 @@ function payout() {
                     var total_payout_value = parseFloat(arr[0]);
                     if (total_payout_value > 0.001) { // SBD                        
                         var reward_balance, recent_claims, basePrice, retSBD;
-                        var msg = "total # of voter : " + result.active_votes.length;    // voters ¼ö¸¦ Ãâ·Â
+                        var msg = "total # of voter : " + result.active_votes.length;    // voters ìˆ˜ë¥¼ ì¶œë ¥
                         console.log(msg);
-                        // º¸»ó Ç®¿¡ ÀÖ´Â reward ÀÜ¾×°ú º¸»óÇÒ ±İ¾× Á¤º¸ ¾ò±â
+                        // ë³´ìƒ í’€ì— ìˆëŠ” reward ì”ì•¡ê³¼ ë³´ìƒí•  ê¸ˆì•¡ ì •ë³´ ì–»ê¸°
                         steem.api.getRewardFund("post", function (err, rewardFund) {
                             reward_balance = parseFloat(rewardFund.reward_balance.split(' '))
                             recent_claims = parseInt(rewardFund.recent_claims)
                             steem.api.getCurrentMedianHistoryPrice(function (err, historyPrice) {
                                 var basePrice = parseFloat(historyPrice.base.split(' '))
                                 var quotePrice = parseFloat(historyPrice.quote.split(' '))
-                                basePrice = basePrice / quotePrice      // feed_price ±¸ÇÔ
-                                for (var i = 0; i < result.active_votes.length; i++) {   // voters ¼ö ¸¸Å­ ¹İº¹
-                                    var rshares = parseInt(result.active_votes[i].rshares)   // i¹øÂ° voter°¡ ÁØ shares °ª
-                                    // rshares¸¦ SBD·Î º¯È¯
+                                basePrice = basePrice / quotePrice      // feed_price êµ¬í•¨
+                                for (var i = 0; i < result.active_votes.length; i++) {   // voters ìˆ˜ ë§Œí¼ ë°˜ë³µ
+                                    var rshares = parseInt(result.active_votes[i].rshares)   // ië²ˆì§¸ voterê°€ ì¤€ shares ê°’
+                                    // rsharesë¥¼ SBDë¡œ ë³€í™˜
                                     retSBD = ((reward_balance / recent_claims) * basePrice * rshares).toFixed(2)
                                     var str = result.active_votes[i].voter + ' :  $' + retSBD + ' : ' + result.active_votes[i].rshares;
                                     console.log(str);
@@ -152,19 +152,19 @@ function payout() {
 
             //steem.api.getActiveVotes(author, obj.permlinkList[i], function (err, voters) {
             //    var reward_balance, recent_claims, basePrice, retSBD;
-            //    var msg = "total # of voter : " + voters.length;    // voters ¼ö¸¦ Ãâ·Â
+            //    var msg = "total # of voter : " + voters.length;    // voters ìˆ˜ë¥¼ ì¶œë ¥
             //    console.log(msg);
-            //    // º¸»ó Ç®¿¡ ÀÖ´Â reward ÀÜ¾×°ú º¸»óÇÒ ±İ¾× Á¤º¸ ¾ò±â
+            //    // ë³´ìƒ í’€ì— ìˆëŠ” reward ì”ì•¡ê³¼ ë³´ìƒí•  ê¸ˆì•¡ ì •ë³´ ì–»ê¸°
             //    steem.api.getRewardFund("post", function (err, rewardFund) {
             //        reward_balance = parseFloat(rewardFund.reward_balance.split(' '))
             //        recent_claims = parseInt(rewardFund.recent_claims)
             //        steem.api.getCurrentMedianHistoryPrice(function (err, historyPrice) {
             //            var basePrice = parseFloat(historyPrice.base.split(' '))
             //            var quotePrice = parseFloat(historyPrice.quote.split(' '))
-            //            basePrice = basePrice / quotePrice      // feed_price ±¸ÇÔ
-            //            for (var i = 0; i < voters.length; i++) {   // voters ¼ö ¸¸Å­ ¹İº¹
-            //                var rshares = parseInt(voters[i].rshares)   // i¹øÂ° voter°¡ ÁØ shares °ª
-            //                // rshares¸¦ SBD·Î º¯È¯
+            //            basePrice = basePrice / quotePrice      // feed_price êµ¬í•¨
+            //            for (var i = 0; i < voters.length; i++) {   // voters ìˆ˜ ë§Œí¼ ë°˜ë³µ
+            //                var rshares = parseInt(voters[i].rshares)   // ië²ˆì§¸ voterê°€ ì¤€ shares ê°’
+            //                // rsharesë¥¼ SBDë¡œ ë³€í™˜
             //                retSBD = ((reward_balance / recent_claims) * basePrice * rshares).toFixed(2)
             //                var str = voters[i].voter + ' :  $' + retSBD + ' : ' + voters[i].rshares;
             //                console.log(str);
