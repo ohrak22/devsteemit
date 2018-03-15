@@ -25,7 +25,7 @@ function update() {
 
         if (now > nextTime) {
             console.log('can comment');
-            //broadcastComment();
+            broadcastComment();
         }
         else {
             console.log("you need 1 hours");
@@ -43,7 +43,7 @@ function broadcastComment() {
         'kr', // Parent Permlink
         author, // Author
         permlink, // Permlink
-        '페이백 봇 테스트', // Title
+        '페이백 봇 테스트 #1', // Title
         '<html>\n<p>&nbsp;&nbsp;소개</p>\n<p>&nbsp;\n<p>보팅을 하시면 페이아웃 후 저자보상으로 받은 스팀달러를 보팅 기여도에 따라 차등 분배하여 보내드립니다. &nbsp;&nbsp;</p>\n<p>테스트 기간 중에는 보상이 정상적으로 지급되지 않을 수 있습니다. &nbsp;&nbsp;</p>\n<p>&nbsp;&nbsp;개발내역</p>\n<p>&nbsp;\n<p>1.자동 포스팅.&nbsp;&nbsp;</p>\n<p>&nbsp;\n<p>2.자동 보상받기.&nbsp;&nbsp;</p>\n<p>&nbsp;\n<p>3.자동 보상송금.&nbsp;&nbsp;</p>\n</html>', // Body
         { tags: ['paybackbot'] }, // Json Metadata
         function (err, result) {
