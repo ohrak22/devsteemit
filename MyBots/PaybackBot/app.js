@@ -1,8 +1,8 @@
 ﻿'use strict';
 var steem = require('steem')
 var fs = require('fs');
-var config = require('./config.json')
-var author = 'paybackbot';
+var config = require('./config - ohrak22.json')
+var author = 'ohrak22';
 var permlink = new Date().toISOString().replace(/[^a-zA-Z0-9]+/g, '').toLowerCase();
 
 console.log('Start');
@@ -34,12 +34,9 @@ function update() {
 
     payout();
 }
-update();
-setInterval(update, 3 * 60 * 60 * 1000);
 
-//steem.api.getContent(author, '20180315t115740510z', function (err, result) {
-//    console.log(err, result);
-//});
+update();
+setInterval(update, 2 * 60 * 60 * 1000);
 
 function broadcastComment() {
     steem.broadcast.comment(
@@ -82,11 +79,11 @@ function getReward() {
         }
         if (response) {
             console.log("response: " + JSON.stringify(response));
-            rewardvests = response[0];
-            rv = rewardvests["reward_vesting_balance"];
-            rvnum = parseFloat(rv);
-            rs = rewardvests["reward_vesting_steem"];
-            rd = rewardvests["reward_sbd_balance"];
+            var rewardvests = response[0];
+            var rv = rewardvests["reward_vesting_balance"];
+            var rvnum = parseFloat(rv);
+            var rs = rewardvests["reward_vesting_steem"];
+            var rd = rewardvests["reward_sbd_balance"];
             console.log("Pending Rewards: " + rd + " / " + rs + " / " + rv);
             if (rvnum > 0) {
                 console.log("Pending Rewards Found! Claiming Now!");
