@@ -11,7 +11,6 @@ var obj = {
     "permlinkList": []
 }
 var intervalHours = 3;
-var title = '';
 
 console.log('Start');
 
@@ -40,14 +39,13 @@ update();
 setInterval(update, intervalHours * 60 * 60 * 1000);
 
 function broadcastComment() {
-    title = '페이백 봇 테스트 #' + obj.postNumber;
     steem.broadcast.comment(
         config.post,
         '', // Parent Author
         'kr', // Parent Permlink
         author, // Author
         permlink, // Permlink
-        title, // Title
+        '페이백 봇 테스트 #' + obj.postNumber, // Title
         '![steemit.png](https://steemitimages.com/DQmbZFP3jKg13tBfSgXkYPv7PLvQpkXm4QaikfTbwpKT6nG/steemit.png) \n## 소개 \n이 글에 보팅을 하시면 저자보상으로 받은 스팀달러를 보팅 기여도에 따라 차등 분배하여 송금해드립니다.  \n*테스트 기간  중에는 보상이 정상적으로 지급되지 않을 수 있습니다.*   \n## 개발내역 \n* 자동 포스팅. \n* 자동 보상받기. \n* 자동 보상송금.', // Body
         { tags: ['paybackbot'] }, // Json Metadata
         function (err, result) {
@@ -135,7 +133,7 @@ function payout() {
                                     var str = result.active_votes[i].voter + ' :  $' + retSBD + ' : ' + result.active_votes[i].rshares;
                                     console.log(str);
                                     if (retSBD > 0.001) {
-                                        //transfer(result.active_votes[i].voter, retSBD);
+                                        transfer(result.active_votes[i].voter, retSBD, result.title);
                                     }
                                 }
                             });
@@ -181,7 +179,7 @@ function payout() {
     });
 }
 
-function transfer(name, value) {
+function transfer(name, value, title) {
 
     steem.broadcast.transfer(config.active, author, name, value + ' SBD', title + '보상', function (err, result) {
         console.log(err, result);
