@@ -11,17 +11,21 @@ var obj = {
 }
 var intervalHours = 3;
 
-console.log('Start');
+function start() {
+    console.log('start');
+    fs.readFile('./commentData.json', 'utf-8', function (err, data) {
+        if (err) {
+            console.log(err);
+        }
+        else if (data) {
+            obj = JSON.parse(data);
+            update();
+            setInterval(update, intervalHours * 60 * 60 * 1000);
+        }
+    });
+}
 
-fs.readFile('./commentData.json', 'utf-8', function (err, data) {
-    if (err)
-        throw err;
-    else if (data) {
-        obj = JSON.parse(data);
-        update();
-        setInterval(update, intervalHours * 60 * 60 * 1000);
-    }
-});
+start();
 
 function update() {
     getReward();
@@ -31,21 +35,23 @@ function update() {
 
 function checkTime() {
     steem.api.getDiscussionsByAuthorBeforeDate(author, '', '2017-03-01T00:00:00', 1, function (err, result) {
-        console.log(err, result);
+        //console.log(err, result);
         if (err) {
-
+            console.log(err);
         }
         else if (result) {
-            console.log(result[0].created);
+            //console.log(result[0].created);
 
             var nextTime = new Date(result[0].created);
-            nextTime.setHours(nextTime.getHours() + intervalHours);
+            nextTime.setHours(nextTime.getHours() + intervalHours + 7);
             var now = new Date();
             if (now > nextTime) {
                 console.log('can comment');
+                console.log("now: " + now + ", next: " + nextTime);
                 broadcastComment();
             }
             else {
+                console.log('can not comment');
                 console.log("now: " + now + ", next: " + nextTime);
             }
         }
@@ -64,9 +70,9 @@ function broadcastComment() {
         '![steemit.png](https://steemitimages.com/DQmbZFP3jKg13tBfSgXkYPv7PLvQpkXm4QaikfTbwpKT6nG/steemit.png) \n## 소개 \n이 글에 보팅을 하시면 저자보상으로 받은 스팀달러를 보팅 기여도에 따라 차등 분배하여 송금해드립니다.  \n*테스트 기간  중에는 보상이 정상적으로 지급되지 않을 수 있습니다.*   \n## 개발내역 \n* 자동 포스팅. \n* 자동 보상받기. \n* 자동 보상송금.', // Body
         { tags: ['paybackbot'] }, // Json Metadata
         function (err, result) {
-            console.log(err, result);
+            //console.log(err, result);
             if (err) {
-                throw err;
+                console.log(err);
             }
             else {
                 // comment에 성공하면 리스트에 저장한다. 나중에 보상에 성공하면 지워준다.
@@ -74,7 +80,7 @@ function broadcastComment() {
                 obj.postNumber++;
                 fs.writeFile('./commentData.json', JSON.stringify(obj), function (err) {
                     if (err)
-                        throw err;
+                        console.log(err);
                     console.log('File write completed');
                 });
             }
@@ -88,7 +94,7 @@ function getReward() {
             console.log("ERROR: Something Went Wrong Grabbing @" + author + "'s Account Info!");
         }
         if (response) {
-            console.log("response: " + JSON.stringify(response));
+            //console.log("response: " + JSON.stringify(response));
             var rewardvests = response[0];
             var rv = rewardvests["reward_vesting_balance"];
             var rvnum = parseFloat(rv);
@@ -114,9 +120,9 @@ function getReward() {
 function payout() {
     for (var i = obj.permlinkList.length - 1; i >= 0; i--) {
         steem.api.getContent(author, obj.permlinkList[i], function (err, result) {
-            console.log(err, result);
+            //console.log(err, result);
             if (err) {
-                throw err;
+                console.log(err);
             }
             else if (result) {
                 var arr = result.total_payout_value.split(' ');
@@ -149,7 +155,7 @@ function payout() {
                     obj.permlinkList.splice(i, 1);
                     fs.writeFile('./commentData.json', JSON.stringify(obj), function (err) {
                         if (err)
-                            throw err;
+                            console.log(err);
                         console.log('File write completed2');
                     });
                 }
@@ -161,9 +167,8 @@ function payout() {
 function transfer(name, value, title) {
 
     steem.broadcast.transfer(config.active, author, name, value + ' SBD', title + ' 보상', function (err, result) {
-        console.log(err, result);
         if (err) {
-
+            console.log(err);
         }
         else if (result) {
 
